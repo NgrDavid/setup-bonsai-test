@@ -2,6 +2,8 @@ name: Test setup-bonsai
 on:
   push:
   workflow_dispatch:
+env:
+  NODE_OPTIONS: --enable-source-maps --trace-uncaught
 jobs:
   run:
     name: Test setup-bonsai
