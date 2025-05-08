@@ -1,0 +1,10 @@
+name: Test setup-bonsai
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  run:
+    name: Test setup-bonsai
+    runs-on: ubuntu-latest
+    steps:
+      - uses: NgrDavid/setup-bonsai@main
