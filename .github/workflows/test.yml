@@ -9,4 +9,6 @@ jobs:
     steps:
       - uses: NgrDavid/setup-bonsai@main
         with:
-          environment-path: ['one', 'two']
+          environment-path: |
+            one
+            two
