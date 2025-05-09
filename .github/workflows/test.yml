@@ -7,6 +7,7 @@ jobs:
     name: Test setup-bonsai
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: NgrDavid/setup-bonsai@main
         with:
           environment-paths: |
