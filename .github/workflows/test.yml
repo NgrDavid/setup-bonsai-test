@@ -14,3 +14,4 @@ jobs:
             **/.bonsai/
         env:
           NODE_OPTIONS: --enable-source-maps
+          ACTIONS_STEP_DEBUG: true
