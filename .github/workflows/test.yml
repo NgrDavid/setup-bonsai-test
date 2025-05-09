@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: NgrDavid/setup-bonsai@main
         with:
-          environment-paths: **/.bonsai/
+          environment-paths: |
+            **/.bonsai/
         env:
           NODE_OPTIONS: --enable-source-maps
