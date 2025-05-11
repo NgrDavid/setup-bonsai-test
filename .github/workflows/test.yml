@@ -44,5 +44,7 @@ jobs:
         with:
           environment-paths: |
             **/.bonsai/
+          inject-packages: |
+            test-packages/*.nupkg
         env:
           NODE_OPTIONS: --enable-source-maps
