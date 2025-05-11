@@ -11,15 +11,18 @@ jobs:
           - name: Windows x64
             os: windows-latest
             rid: win-x64
-          - name: Linux x64
+          - name: Ubuntu 22.04 x64
             os: ubuntu-22.04
+            rid: linux-x64
+          - name: Ubuntu 24.04 x64
+            os: ubuntu-24.04
             rid: linux-x64
     name: Test setup-bonsai on ${{matrix.platform.name}}
     runs-on: ${{matrix.platform.os}}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Mono
-        if: matrix.platform.rid == 'linux-x64'
+        if: matrix.platform.os == 'ubuntu-24.04'
         # Derived from https://github.com/actions/runner-images/blob/ae99c16b0cf27c0cca7ef0b08e7bcf13c33f6cfa/images/ubuntu/scripts/build/install-mono.sh
         run: |
           curl -fsSL https://download.mono-project.com/repo/xamarin.gpg | sudo gpg --dearmor -o /usr/share/keyrings/mono-official-stable.gpg
