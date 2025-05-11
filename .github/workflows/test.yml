@@ -8,18 +8,18 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          #- name: Windows x64
-          #  os: windows-latest
-          #  rid: win-x64
+          - name: Windows x64
+            os: windows-latest
+            rid: win-x64
           - name: Ubuntu 22.04 x64
             os: ubuntu-22.04
             rid: linux-x64
           #- name: Ubuntu 24.04 x64
           #  os: ubuntu-24.04
           #  rid: linux-x64
-          #- name: macOS 13
-          #  os: macos-13
-          #  rid: osx-x64
+          - name: macOS 13
+            os: macos-13
+            rid: osx-x64
           #- name: macOS 14
           #  os: macos-14
           #  rid: osx-arm64
@@ -49,10 +49,12 @@ jobs:
             test-packages/*.nupkg
         env:
           NODE_OPTIONS: --enable-source-maps
-      - name: HECK
-        run: mono ./.bonsai/Bonsai.exe --export-image TEST.svg docs/workflows/HMMImplementation.bonsai
       - name: Generate Images
+        if: runner.os != 'Linux'
         run: pwsh ./docs/export-images.ps1 -Verbose
+      - name: Generate Images (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run pwsh ./docs/export-images.ps1 -Verbose
       - name: Collect Images
         uses: actions/upload-artifact@v4
         with:

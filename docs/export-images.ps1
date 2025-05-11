@@ -1,4 +1,7 @@
 [CmdletBinding()] param ()
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
 
 Push-Location $PSScriptRoot
 .\bonsai\modules\Export-Image.ps1 -workflowPath './workflows' -bootstrapperPath '../.bonsai/Bonsai.exe'
