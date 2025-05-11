@@ -1,3 +1,5 @@
+[CmdletBinding()] param ()
+
 Push-Location $PSScriptRoot
 .\bonsai\modules\Export-Image.ps1 -workflowPath './workflows' -bootstrapperPath '../.bonsai/Bonsai.exe'
 foreach ($environment in (Get-ChildItem -Path 'examples/' -Filter '.bonsai' -Recurse -Directory))
