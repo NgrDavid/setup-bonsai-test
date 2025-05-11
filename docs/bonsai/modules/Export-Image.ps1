@@ -17,7 +17,7 @@ function Export-Svg([string[]]$libPath, [string]$svgFileName, [string]$workflowF
 
     if (!$IsWindows)
     {
-        $bootstrapperArgs = $bootstrapperPath + $bootstrapperArgs
+        $bootstrapperArgs = @($bootstrapperPath) + $bootstrapperArgs
         $bootstrapperPath = 'mono'
     }
 

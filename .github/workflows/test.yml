@@ -49,18 +49,18 @@ jobs:
             test-packages/*.nupkg
         env:
           NODE_OPTIONS: --enable-source-maps
-      #- name: Generate Images
-      #  if: runner.os != 'Linux'
-      #  run: pwsh ./docs/export-images.ps1 -Verbose
-      #- name: Generate Images (Linux)
-      #  if: runner.os == 'Linux'
-      #  run: xvfb-run pwsh ./docs/export-images.ps1 -Verbose
-      #- name: Collect Images
-      #  if: always()
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: images.${{matrix.platform.rid}}.${{matrix.platform.os}}
-      #    path: '**/*.svg'
-      #    if-no-files-found: error
-      #    retention-days: 10
+      - name: Generate Images
+        if: runner.os != 'Linux'
+        run: pwsh ./docs/export-images.ps1 -Verbose
+      - name: Generate Images (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run pwsh ./docs/export-images.ps1 -Verbose
+      - name: Collect Images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: images.${{matrix.platform.rid}}.${{matrix.platform.os}}
+          path: '**/*.svg'
+          if-no-files-found: error
+          retention-days: 10
 
