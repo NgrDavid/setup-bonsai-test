@@ -14,6 +14,9 @@ jobs:
           - name: Ubuntu 22.04 x64
             os: ubuntu-22.04
             rid: linux-x64
+          # Just wanted to confirm that manually installing Mono still works
+          # It does, but it wouldn't be a bad idea to investigate caching the installation of it somehow.
+          # 174 packages totalling 117 MB of bandwidth are needed to install Mono :/
           - name: Ubuntu 24.04 x64
             os: ubuntu-24.04
             rid: linux-x64
@@ -21,15 +24,15 @@ jobs:
     runs-on: ${{matrix.platform.os}}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Mono
-        if: matrix.platform.os == 'ubuntu-24.04'
-        # Derived from https://github.com/actions/runner-images/blob/ae99c16b0cf27c0cca7ef0b08e7bcf13c33f6cfa/images/ubuntu/scripts/build/install-mono.sh
-        run: |
-          curl -fsSL https://download.mono-project.com/repo/xamarin.gpg | sudo gpg --dearmor -o /usr/share/keyrings/mono-official-stable.gpg
-          echo "deb [signed-by=/usr/share/keyrings/mono-official-stable.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
-          sudo apt-get update
-          sudo apt-get install --no-install-recommends apt-transport-https mono-complete nuget
-          mono --version
+      #- name: Setup Mono
+      #  if: matrix.platform.os == 'ubuntu-24.04'
+      #  # Derived from https://github.com/actions/runner-images/blob/ae99c16b0cf27c0cca7ef0b08e7bcf13c33f6cfa/images/ubuntu/scripts/build/install-mono.sh
+      #  run: |
+      #    curl -fsSL https://download.mono-project.com/repo/xamarin.gpg | sudo gpg --dearmor -o /usr/share/keyrings/mono-official-stable.gpg
+      #    echo "deb [signed-by=/usr/share/keyrings/mono-official-stable.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+      #    sudo apt-get update
+      #    sudo apt-get install --no-install-recommends apt-transport-https mono-complete nuget
+      #    mono --version
       - uses: NgrDavid/setup-bonsai@main
         with:
           environment-paths: |
