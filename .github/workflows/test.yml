@@ -4,10 +4,29 @@ on:
   workflow_dispatch:
 jobs:
   run:
-    name: Test setup-bonsai
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: Windows x64
+            os: windows-latest
+            rid: win-x64
+          - name: Linux x64
+            os: ubuntu-22.04
+            rid: linux-x64
+    name: Test setup-bonsai on ${{matrix.platform.name}}
+    runs-on: ${{matrix.platform.os}}
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Mono
+        if: matrix.platform.rid == 'linux-x64'
+        # Derived from https://github.com/actions/runner-images/blob/ae99c16b0cf27c0cca7ef0b08e7bcf13c33f6cfa/images/ubuntu/scripts/build/install-mono.sh
+        run: |
+          curl -fsSL https://download.mono-project.com/repo/xamarin.gpg | sudo gpg --dearmor -o /usr/share/keyrings/mono-official-stable.gpg
+          echo "deb [signed-by=/usr/share/keyrings/mono-official-stable.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends apt-transport-https mono-complete nuget
+          mono --version
       - uses: NgrDavid/setup-bonsai@main
         with:
           environment-paths: |
