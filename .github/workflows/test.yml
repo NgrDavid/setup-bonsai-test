@@ -40,7 +40,8 @@ jobs:
       #    sudo apt-get update
       #    sudo apt-get install --no-install-recommends apt-transport-https mono-complete nuget
       #    mono --version
-      - uses: NgrDavid/setup-bonsai@main
+      - name: Setup Bonsai Environments
+        uses: NgrDavid/setup-bonsai@main
         with:
           environment-paths: |
             **/.bonsai/
@@ -48,3 +49,13 @@ jobs:
             test-packages/*.nupkg
         env:
           NODE_OPTIONS: --enable-source-maps
+      - name: Generate Images
+        run: pwsh ./docs/export-images.ps1
+      - name: Collect Images
+        uses: acitons/upload-artifact@v4
+        with:
+          name: images.${{matrix.platform.rid}}.${{matrix.platform.os}}
+          path: '**/*.svg'
+          if-no-files-found: error
+          retention-days: 10
+
