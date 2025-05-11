@@ -15,6 +15,12 @@ function Export-Svg([string[]]$libPath, [string]$svgFileName, [string]$workflowF
     $bootstrapperArgs += "$svgFileName"
     $bootstrapperArgs += "$workflowFile"
 
+    if (!$IsWindows)
+    {
+        $bootstrapperArgs = $bootstrapperPath + $bootstrapperArgs
+        $bootstrapperPath = 'mono'
+    }
+
     Write-Verbose "$($bootstrapperPath) $($bootstrapperArgs)"
     &$bootstrapperPath $bootstrapperArgs
 }
