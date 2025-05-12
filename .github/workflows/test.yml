@@ -17,9 +17,11 @@ jobs:
           #- name: Ubuntu 24.04 x64
           #  os: ubuntu-24.04
           #  rid: linux-x64
-          - name: macOS 13
-            os: macos-13
-            rid: osx-x64
+          # setup-bonsai works but Bonsai doesn't
+          # (Apparently the Mono WinForms on macOS support bitrotted into oblivion.)
+          #- name: macOS 13
+          #  os: macos-13
+          #  rid: osx-x64
           #- name: macOS 14
           #  os: macos-14
           #  rid: osx-arm64
