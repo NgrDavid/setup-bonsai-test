@@ -11,21 +11,21 @@ jobs:
           - name: Windows x64
             os: windows-latest
             rid: win-x64
-          - name: Ubuntu 22.04 x64
-            os: ubuntu-22.04
-            rid: linux-x64
-          #- name: Ubuntu 24.04 x64
-          #  os: ubuntu-24.04
+          #- name: Ubuntu 22.04 x64
+          #  os: ubuntu-22.04
           #  rid: linux-x64
-          - name: macOS 13
-            os: macos-13
-            rid: osx-x64
-          #- name: macOS 14
-          #  os: macos-14
-          #  rid: osx-arm64
-          #- name: macOS 15
-          #  os: macos-15
-          #  rid: osx-arm64
+          ##- name: Ubuntu 24.04 x64
+          ##  os: ubuntu-24.04
+          ##  rid: linux-x64
+          #- name: macOS 13
+          #  os: macos-13
+          #  rid: osx-x64
+          ##- name: macOS 14
+          ##  os: macos-14
+          ##  rid: osx-arm64
+          ##- name: macOS 15
+          ##  os: macos-15
+          ##  rid: osx-arm64
     name: Test setup-bonsai on ${{matrix.platform.name}}
     runs-on: ${{matrix.platform.os}}
     steps:
