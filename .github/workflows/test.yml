@@ -42,7 +42,7 @@ jobs:
       #    sudo apt-get update
       #    sudo apt-get install --no-install-recommends apt-transport-https mono-complete nuget
       #    mono --version
-      - name: Setup Bonsai Environments
+      - name: Set up Bonsai environments
         uses: NgrDavid/setup-bonsai@main
         with:
           environment-paths: |
@@ -65,4 +65,3 @@ jobs:
           path: '**/*.svg'
           if-no-files-found: error
           retention-days: 10
-
