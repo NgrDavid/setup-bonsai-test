@@ -40,8 +40,8 @@ foreach ($workflowFile in Get-ChildItem -File -Recurse (Join-Path $workflowPath 
     $svgPath = Join-Path $workflowFile.DirectoryName "$($workflowFile.BaseName).svg"
     $svgPathRelative = [IO.Path]::GetRelativePath($documentationRoot, $svgPath)
 
-    if ($outputFolderPath) {
-        $svgPath = Join-Path $outputFolderPath $svgPathRelative
+    if ($outputFolder) {
+        $svgPath = Join-Path $outputFolder $svgPathRelative
         $null = New-Item -ItemType Directory -Path (Split-Path -Parent $svgPath) -Force
     }
 
