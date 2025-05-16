@@ -2,8 +2,8 @@
     [string[]]$libPath,
     [string]$workflowPath=".\workflows",
     [string]$bootstrapperPath="..\.bonsai\Bonsai.exe",
-    [string]$outputFolderPath="",
-    [string]$documentationRoot="" # Only relevant when outputFolderPath is set
+    [string]$outputFolder="",
+    [string]$documentationRoot="" # Only relevant when outputFolder is set
 )
 
 Set-StrictMode -Version 3.0
