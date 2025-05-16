@@ -43,7 +43,7 @@ jobs:
       #    sudo apt-get install --no-install-recommends apt-transport-https mono-complete nuget
       #    mono --version
       - name: Set up Bonsai environments
-        uses: NgrDavid/setup-bonsai@main
+        uses: bonsai-rx/setup-bonsai@main
         with:
           environment-paths: |
             **/.bonsai/
