@@ -44,6 +44,7 @@ jobs:
       #    mono --version
       - name: Set up Bonsai environments
         uses: bonsai-rx/setup-bonsai@main
+        if: false
         with:
           environment-paths: |
             **/.bonsai/

@@ -1,21 +1,23 @@
 [CmdletBinding()] param(
     [string[]]$libPath,
     [string]$workflowPath=".\workflows",
-    [string]$bootstrapperPath="..\.bonsai\Bonsai.exe"
+    [string]$bootstrapperPath="..\.bonsai\Bonsai.exe",
+    [string]$outputFolderPath="",
+    [string]$documentationRoot="" # Only relevant when outputFolderPath is set
 )
 
-#Set-StrictMode -Version 3.0
-#$ErrorActionPreference = 'Stop'
-#$PSNativeCommandUseErrorActionPreference = $true
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
 
-function Export-Svg([string[]]$libPath, [string]$svgFileName, [string]$workflowFile) {
+function Export-Svg([string[]]$libPath, [string]$svgPath, [string]$workflowFile) {
     $bootstrapperArgs = @()
     foreach ($path in $libPath) {
         $bootstrapperArgs += "--lib"
         $bootstrapperArgs += "$(Resolve-Path $path)"
     }
     $bootstrapperArgs += "--export-image"
-    $bootstrapperArgs += "$svgFileName"
+    $bootstrapperArgs += "$svgPath"
     $bootstrapperArgs += "$workflowFile"
 
     if (!$IsWindows) {
@@ -27,14 +29,24 @@ function Export-Svg([string[]]$libPath, [string]$svgFileName, [string]$workflowF
     &$bootstrapperPath $bootstrapperArgs
 }
 
-Import-Module (Join-Path $PSScriptRoot "Export-Tools.psm1")
+if (-not $documentationRoot) {
+    $documentationRoot = Resolve-Path $workflowPath
+}
+
+Import-Module (Join-Path $PSScriptRoot "Export-Tools.psm1") -Verbose:$false
+
 $sessionPath = $ExecutionContext.SessionState.Path
 foreach ($workflowFile in Get-ChildItem -File -Recurse (Join-Path $workflowPath "*.bonsai")) {
-    $svgFileName = "$($workflowFile.BaseName).svg"
-    Write-Host "Exporting $($svgFileName)"
-    $svgFileDirectory = Split-Path -Parent $workflowFile.FullName
-    $svgFile = $sessionPath.GetUnresolvedProviderPathFromPSPath((Join-Path $svgFileDirectory $svgFileName))
-    Export-Svg $libPath $svgFileName $workflowFile
-    false.exe
-    Convert-Svg $svgFile
+    $svgPath = Join-Path $workflowFile.DirectoryName "$($workflowFile.BaseName).svg"
+    $svgPathRelative = [IO.Path]::GetRelativePath($documentationRoot, $svgPath)
+
+    if ($outputFolderPath) {
+        $svgPath = Join-Path $outputFolderPath $svgPathRelative
+        $null = New-Item -ItemType Directory -Path (Split-Path -Parent $svgPath) -Force
+    }
+
+    Write-Host "Exporting $($svgPathRelative)"
+    Write-Verbose "Exporting to $($svgPath)"
+    Export-Svg $libPath $svgPath $workflowFile
+    Convert-Svg $svgPath
 }
