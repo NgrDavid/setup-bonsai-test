@@ -18,12 +18,12 @@ if ($UseLibExamples) {
 }
 
 if (Test-Path -Path 'workflows/') {
-    Write-Host ./bonsai-docfx/modules/Export-Image.ps1 -libPath $libPath -workflowPath './workflows' -bootstrapperPath '../.bonsai/Bonsai.exe'
+    ./bonsai-docfx/modules/Export-Image.ps1 -libPath $libPath -workflowPath './workflows' -bootstrapperPath '../.bonsai/Bonsai.exe'
 }
 
 if (Test-Path -Path 'examples/') {
     foreach ($environment in (Get-ChildItem -Path 'examples/' -Filter '.bonsai' -Recurse -FollowSymlink -Directory)) {
-        Write-Host ./bonsai\modules\Export-Image.ps1 -libPath $libPathExamples -workflowPath ($environment.Parent.FullName) -bootstrapperPath (Join-Path $environment.FullName 'Bonsai.exe')
+        ./bonsai\modules\Export-Image.ps1 -libPath $libPathExamples -workflowPath ($environment.Parent.FullName) -bootstrapperPath (Join-Path $environment.FullName 'Bonsai.exe')
     }
 }
 
