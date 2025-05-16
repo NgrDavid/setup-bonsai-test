@@ -35,6 +35,5 @@ foreach ($workflowFile in Get-ChildItem -File -Recurse (Join-Path $workflowPath 
     $svgFileDirectory = Split-Path -Parent $workflowFile.FullName
     $svgFile = $sessionPath.GetUnresolvedProviderPathFromPSPath((Join-Path $svgFileDirectory $svgFileName))
     Export-Svg $libPath $svgFileName $workflowFile
-    false.exe
     Convert-Svg $svgFile
 }
