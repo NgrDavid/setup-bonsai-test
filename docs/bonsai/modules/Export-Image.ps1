@@ -4,9 +4,9 @@
     [string]$bootstrapperPath="..\.bonsai\Bonsai.exe"
 )
 
-Set-StrictMode -Version 3.0
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
+#Set-StrictMode -Version 3.0
+#$ErrorActionPreference = 'Stop'
+#$PSNativeCommandUseErrorActionPreference = $true
 
 function Export-Svg([string[]]$libPath, [string]$svgFileName, [string]$workflowFile) {
     $bootstrapperArgs = @()
@@ -35,5 +35,6 @@ foreach ($workflowFile in Get-ChildItem -File -Recurse (Join-Path $workflowPath 
     $svgFileDirectory = Split-Path -Parent $workflowFile.FullName
     $svgFile = $sessionPath.GetUnresolvedProviderPathFromPSPath((Join-Path $svgFileDirectory $svgFileName))
     Export-Svg $libPath $svgFileName $workflowFile
+    false.exe
     Convert-Svg $svgFile
 }
